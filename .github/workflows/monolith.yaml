@@ -1,1 +1,14 @@
+name: Monolith reuse
 
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Monolith
+        uses: ./.github/actions/monolith
+        with:
+          command_install: 'yarn install --frozen-lockfile'
+          version_manager: 'yarn'
