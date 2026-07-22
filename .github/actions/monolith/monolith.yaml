@@ -1,1 +1,30 @@
+name: "Monolith"
+description: "Monolith GHA"
+author: "kfarkasHU"
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
+    - name: Install Volta
+      run: |
+        curl https://get.volta.sh | bash
+        echo "$HOME/.volta/bin" >> $GITHUB_PATH
+
+    - name: Install packages
+      run: |
+        volta install node yarn
+        ${{ inputs.command_install }}
+
+    - name: Run build
+      run: ${{ inputs.version_manager }} run gha:build:prod
+
+inputs:
+  command_install:
+    description: "Install command"
+    required: true
+  version_manager:
+    description: "Version manager: yarn | npm | pnpm"
