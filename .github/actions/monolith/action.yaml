@@ -10,16 +10,19 @@ runs:
         fetch-depth: 0
 
     - name: Install Volta
+      shell: bash
       run: |
         curl https://get.volta.sh | bash
         echo "$HOME/.volta/bin" >> $GITHUB_PATH
 
     - name: Install packages
+      shell: bash
       run: |
         volta install node yarn
         ${{ inputs.command_install }}
 
     - name: Run build
+      shell: bash
       run: ${{ inputs.version_manager }} run gha:build:prod
 
 inputs:
